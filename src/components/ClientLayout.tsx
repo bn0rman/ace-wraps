@@ -95,41 +95,41 @@ export default function ClientLayout({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed inset-y-0 right-0 w-full bg-dark/95 backdrop-blur-lg md:hidden"
+              className="fixed inset-y-0 right-0 w-full bg-gradient-to-b from-dark via-dark/98 to-dark/95 backdrop-blur-xl md:hidden"
             >
               <div className="pt-24 px-4">
                 <div className="flex flex-col space-y-6 items-center text-center">
                   <Link 
                     href="/" 
-                    className="text-xl text-white glow-text-hover w-full py-3"
+                    className="text-xl text-white glow-text-hover w-full py-3 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
                   </Link>
                   <Link 
                     href="/gallery" 
-                    className="text-xl text-white glow-text-hover w-full py-3"
+                    className="text-xl text-white glow-text-hover w-full py-3 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Gallery
                   </Link>
                   <Link 
                     href="/about" 
-                    className="text-xl text-white glow-text-hover w-full py-3"
+                    className="text-xl text-white glow-text-hover w-full py-3 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About Us
                   </Link>
                   <Link 
                     href="/faq" 
-                    className="text-xl text-white glow-text-hover w-full py-3"
+                    className="text-xl text-white glow-text-hover w-full py-3 rounded-lg hover:bg-white/5 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     FAQ
                   </Link>
                   <Link 
                     href="/quote" 
-                    className="bg-neon text-dark px-8 py-4 rounded-full text-xl font-medium hover:bg-opacity-90 glow-on-hover w-full max-w-xs"
+                    className="bg-neon text-dark px-8 py-4 rounded-full text-xl font-medium hover:bg-opacity-90 glow-on-hover w-full max-w-xs transition-transform hover:scale-105"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Get a Quote
