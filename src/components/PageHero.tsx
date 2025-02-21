@@ -41,13 +41,13 @@ export default function PageHero({ title, description, imageUrl, className = "h-
         />
       </motion.div>
       
-      <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
         <motion.div 
           className="max-w-2xl"
           style={{ y: titleY, opacity }}
         >
           <motion.h1 
-            className="text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -55,7 +55,7 @@ export default function PageHero({ title, description, imageUrl, className = "h-
             {title}
           </motion.h1>
           <motion.p 
-            className="text-xl text-gray-300"
+            className="text-lg sm:text-xl text-gray-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
