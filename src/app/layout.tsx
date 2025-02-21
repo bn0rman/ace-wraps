@@ -1,28 +1,33 @@
-import type { Metadata } from "next";
+'use client';
+
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Ace Wraps | Premium Car Wrapping Services",
-  description: "Transform your vehicle with Sydney's leading car wrap specialists. Professional installation, premium materials, and stunning results guaranteed.",
-};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname();
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-dark text-white min-h-screen`}>
         <nav className="fixed w-full top-0 z-50 bg-dark/60 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-24">
-              <div className="flex-shrink-0">
+              <motion.div 
+                className="flex-shrink-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <Link href="/" className="flex-shrink-0">
                   <Image
                     src="/images/ace_wraps3.png"
@@ -32,9 +37,14 @@ export default function RootLayout({
                     className="h-auto filter brightness-0 invert"
                   />
                 </Link>
-              </div>
+              </motion.div>
               <div className="hidden md:block">
-                <div className="ml-10 flex items-center space-x-8">
+                <motion.div 
+                  className="ml-10 flex items-center space-x-8"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   <Link href="/" className="text-lg text-white hover:text-neon">Home</Link>
                   <Link href="/services" className="text-lg text-white hover:text-neon">Services</Link>
                   <Link href="/gallery" className="text-lg text-white hover:text-neon">Gallery</Link>
@@ -43,14 +53,24 @@ export default function RootLayout({
                   <Link href="/contact" className="bg-neon text-dark px-6 py-3 rounded-full text-lg font-medium hover:bg-opacity-90">
                     Get a Quote
                   </Link>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
         </nav>
-        <main>
-          {children}
-        </main>
+
+        <AnimatePresence mode="wait">
+          <motion.main
+            key={pathname}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {children}
+          </motion.main>
+        </AnimatePresence>
+
         <footer className="bg-dark-secondary mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

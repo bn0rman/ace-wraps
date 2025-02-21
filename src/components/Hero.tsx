@@ -1,42 +1,47 @@
-import Link from 'next/link';
+import { motion } from 'framer-motion';
 
-export default function Hero() {
+interface HeroProps {
+  title: string;
+  description: string;
+}
+
+export default function Hero({ title, description }: HeroProps) {
   return (
-    <div className="relative h-screen">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url("/hero-bg.jpg")',
-          filter: 'brightness(0.7)'
-        }}
-      />
-      
-      {/* Content */}
-      <div className="relative h-full flex items-center justify-center">
-        <div className="text-center text-white px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            Transform Your Vehicle
-          </h1>
-          <p className="text-xl sm:text-2xl md:text-3xl mb-8">
-            Premium Car Wrapping Services in Australia
-          </p>
-          <div className="space-x-4">
-            <Link
-              href="/contact"
-              className="bg-white text-black px-8 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors"
-            >
-              Get a Quote
-            </Link>
-            <Link
-              href="/gallery"
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-md font-semibold hover:bg-white hover:text-black transition-colors"
-            >
-              View Our Work
-            </Link>
-          </div>
-        </div>
+    <section className="relative h-[60vh] overflow-hidden">
+      <div className="absolute inset-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="object-cover w-full h-full"
+        >
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-dark/80 to-dark/40" />
       </div>
-    </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
+        <motion.div 
+          className="max-w-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.h1 
+            className="text-6xl font-bold mb-6"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+          <motion.p 
+            className="text-xl text-gray-300 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            {description}
+          </motion.p>
+        </motion.div>
+      </div>
+    </section>
   );
 } 
