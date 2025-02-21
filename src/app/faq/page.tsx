@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { motion } from 'framer-motion';
 
 const faqs = [
   {
@@ -119,125 +121,140 @@ const faqs = [
   }
 ];
 
-export default function FAQPage() {
-  const [openCategory, setOpenCategory] = useState<string | null>(null);
-  const [openQuestions, setOpenQuestions] = useState<string[]>([]);
-
-  const toggleCategory = (category: string) => {
-    setOpenCategory(openCategory === category ? null : category);
-  };
-
-  const toggleQuestion = (question: string) => {
-    setOpenQuestions(prev => 
-      prev.includes(question)
-        ? prev.filter(q => q !== question)
-        : [...prev, question]
-    );
-  };
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-dark">
-      {/* FAQ Hero */}
-      <div className="relative h-[60vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="object-cover w-full h-full"
-          >
-            <source src="/videos/hero-video.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-dark/80 to-dark/40" />
-        </div>
-        <div className="relative h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full mt-24">
-            <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl mb-6">
-              Frequently Asked Questions
-            </h1>
-            <p className="text-xl max-w-3xl mx-auto text-gray-300">
-              Find answers to common questions about our services
-            </p>
+    <div className="border-b border-gray-700 last:border-none">
+      <button
+        className="py-4 w-full flex justify-between items-center text-left hover:text-neon transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="text-lg font-medium">{question}</span>
+        <span className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </button>
+      <div className={`transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+        <p className="pb-4 text-gray-300 text-base">{answer}</p>
+      </div>
+    </div>
+  );
+}
+
+function CategorySection({ category, questions }: { category: string; questions: { question: string; answer: string }[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div 
+      className="bg-dark-secondary rounded-2xl overflow-hidden"
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.5,
+        type: "spring",
+        bounce: 0.3
+      }}
+    >
+      <button
+        className="w-full px-6 py-4 flex justify-between items-center text-left hover:bg-dark/20 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <h2 className="text-2xl font-bold">{category}</h2>
+        <span className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </button>
+      <div className={`transition-all duration-300 ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+        <div className="px-6 pb-4">
+          <div className="space-y-2">
+            {questions.map((faq) => (
+              <FAQItem 
+                key={faq.question} 
+                question={faq.question} 
+                answer={faq.answer} 
+              />
+            ))}
           </div>
         </div>
       </div>
+    </motion.div>
+  );
+}
 
-      {/* FAQ Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="space-y-8">
-          {faqs.map((category) => (
-            <div key={category.category} className="bg-dark-secondary rounded-2xl overflow-hidden">
-              <button
-                onClick={() => toggleCategory(category.category)}
-                className="w-full px-6 py-4 flex justify-between items-center hover:bg-dark/20"
-              >
-                <h2 className="text-2xl font-bold">{category.category}</h2>
-                <svg
-                  className={`w-6 h-6 transform transition-transform ${
-                    openCategory === category.category ? 'rotate-180' : ''
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openCategory === category.category && (
-                <div className="px-6 pb-4">
-                  <div className="space-y-4">
-                    {category.questions.map((faq) => (
-                      <div key={faq.question} className="border-b border-dark/10 last:border-0">
-                        <button
-                          onClick={() => toggleQuestion(faq.question)}
-                          className="w-full py-4 flex justify-between items-center text-left"
-                        >
-                          <h3 className="text-lg font-medium pr-8">{faq.question}</h3>
-                          <svg
-                            className={`w-5 h-5 transform transition-transform flex-shrink-0 ${
-                              openQuestions.includes(faq.question) ? 'rotate-180' : ''
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                        {openQuestions.includes(faq.question) && (
-                          <p className="pb-4 text-gray-300">{faq.answer}</p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="bg-dark-secondary py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-4">
-            Still Have Questions?
-          </h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Contact us for personalized answers to your specific needs
+export default function FAQPage() {
+  return (
+    <ErrorBoundary>
+      <div className="bg-dark min-h-screen">
+        <motion.div 
+          className="pt-32 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-5xl font-bold mb-4">
+            Frequently Asked <span className="text-[#ddc9ff]">Questions</span>
+          </h1>
+          <p className="text-xl text-gray-300 mb-12">
+            Find answers to common questions about our services and processes
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center bg-neon text-dark px-8 py-4 rounded-full text-lg font-medium hover:bg-opacity-90"
+        </motion.div>
+
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <motion.div 
+            className="space-y-4"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
           >
-            <span className="mr-2">Get in Touch</span>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
-        </div>
+            {faqs.map((category) => (
+              <CategorySection 
+                key={category.category}
+                category={category.category}
+                questions={category.questions}
+              />
+            ))}
+          </motion.div>
+        </section>
+
+        {/* Contact CTA */}
+        <section className="bg-dark-secondary">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <motion.div 
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl font-bold mb-4">Still Have <span className="text-[#ddc9ff]">Questions</span>?</h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Contact us directly and we&apos;ll be happy to help
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center bg-neon text-dark px-8 py-4 rounded-full text-lg font-medium hover:bg-opacity-90 transition-all duration-300"
+              >
+                Contact Us
+                <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </motion.div>
+          </div>
+        </section>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 } 
