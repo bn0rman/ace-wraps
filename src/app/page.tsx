@@ -27,7 +27,7 @@ export default function Home() {
               SERVICES
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Transform your vehicle with Sydney's leading car wrap specialists. 
+              Transform your vehicle with Sydney&apos;s leading car wrap specialists. 
               Professional installation, premium materials, and stunning results guaranteed.
             </p>
             <Link 
@@ -116,7 +116,7 @@ export default function Home() {
                 SERVICES
               </h2>
               <p className="text-xl text-gray-300 mb-8">
-                We're committed to leading the way in premium vehicle transformation. 
+                We&apos;re committed to leading the way in premium vehicle transformation. 
                 Our services combine cutting-edge techniques with premium materials, 
                 ensuring exceptional results every time.
               </p>
@@ -146,7 +146,7 @@ export default function Home() {
               <p className="text-xl text-gray-300">
                 Say goodbye to ordinary vehicle appearances. Our premium services 
                 deliver unmatched quality and durability, making a lasting impact 
-                on your vehicle's aesthetics.
+                on your vehicle&apos;s aesthetics.
               </p>
             </div>
           </div>

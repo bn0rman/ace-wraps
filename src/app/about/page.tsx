@@ -58,13 +58,13 @@ export default function AboutPage() {
             <h2 className="text-5xl font-bold mb-8">Our Story</h2>
             <div className="space-y-6 text-xl text-gray-300">
               <p>
-                Founded in 2010, Ace Wraps has grown to become one of Australia's leading vehicle transformation specialists. Our journey began with a simple mission: to provide the highest quality car wrapping services with unmatched attention to detail.
+                Founded in 2010, Ace Wraps has grown to become one of Australia&apos;s leading vehicle transformation specialists. Our journey began with a simple mission: to provide the highest quality car wrapping services with unmatched attention to detail.
               </p>
               <p>
-                Over the years, we've expanded our services to include paint protection films, ceramic coatings, and commercial fleet branding, always staying at the forefront of industry innovations and techniques.
+                Over the years, we&apos;ve expanded our services to include paint protection films, ceramic coatings, and commercial fleet branding, always staying at the forefront of industry innovations and techniques.
               </p>
               <p>
-                Today, we're proud to be the trusted choice for car enthusiasts, luxury vehicle owners, and businesses across Australia.
+                Today, we&apos;re proud to be the trusted choice for car enthusiasts, luxury vehicle owners, and businesses across Australia.
               </p>
             </div>
           </div>
