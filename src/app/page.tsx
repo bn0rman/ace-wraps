@@ -54,7 +54,7 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-300 mb-8">
               We drive innovation and sustainability into the future of vehicle transformation. 
-              Our range of premium wrapping services is designed to redefine your vehicle's appearance.
+              Our range of premium wrapping services is designed to redefine your vehicle&apos;s appearance.
             </p>
             <div className="flex gap-4">
               <div className="w-20 h-20 rounded-full overflow-hidden">
